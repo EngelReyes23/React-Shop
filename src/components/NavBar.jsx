@@ -1,34 +1,34 @@
 import clsx from 'clsx'
 import { useState } from 'react'
+import { ActiveLink } from './ActiveLink'
 
 const LINKs = [
   {
     name: 'Home',
-    href: '#'
+    href: '/home'
   },
   {
     name: 'Products',
-    href: '#'
+    href: '/products'
   },
   {
     name: 'Contact',
-    href: '#'
+    href: '/contact'
   },
   {
     name: 'About',
-    href: '#'
+    href: '/about'
   }
 ]
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
-
   const toggle = () => {
     setIsOpen(!isOpen)
   }
 
   return (
-    <nav className='sticky top-0 z-10 bg-white shadow dark:bg-gray-800'>
+    <nav className='sticky top-0 z-20 bg-white shadow dark:bg-gray-800'>
       <div className='container mx-auto px-6 py-4 md:flex md:items-center md:justify-between'>
         <div className='flex items-center justify-between'>
           <div>
@@ -86,20 +86,14 @@ export const NavBar = () => {
         >
           <div className='flex flex-col md:mx-6 md:flex-row'>
             {LINKs.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className='my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 dark:text-gray-200 dark:hover:text-blue-400 md:mx-4 md:my-0'
-              >
-                {link.name}
-              </a>
+              <ActiveLink key={link.name} {...link} />
             ))}
           </div>
 
           <div className='flex justify-center md:block'>
             <a
               className='relative transform text-gray-700 transition-colors duration-300 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-300'
-              href='#'
+              href='/shopping-cart'
             >
               <svg
                 className='h-5 w-5'

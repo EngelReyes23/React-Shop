@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const API_URL = 'https://api.escuelajs.co/api/v1/products?offset=0&limit=10'
+const API_URL = 'https://api.escuelajs.co/api/v1/products?offset=20&limit=20'
 
 const getProducts = async () => {
   const response = await fetch(API_URL)
@@ -10,20 +10,29 @@ const getProducts = async () => {
 }
 
 export const useProducts = () => {
-  const [products, setProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [data, setData] = useState({
+    error: null,
+    products: [],
+    isLoading: true
+  })
 
   useEffect(() => {
     getProducts()
       .then((data) => {
-        setProducts(data)
+        setData({
+          error: null,
+          products: data,
+          isLoading: false
+        })
       })
       .catch((error) => {
-        setError(error.message)
+        setData({
+          error: error.message,
+          products: [],
+          isLoading: false
+        })
       })
-      .finally(setIsLoading(false))
   }, [])
 
-  return { products, isLoading, error }
+  return data
 }
