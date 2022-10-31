@@ -1,4 +1,6 @@
 export { About } from './About'
+export { Checkout } from './Checkout'
 export { Contact } from './Contact'
 export { Home } from './Home'
 export { Products } from './Products'
+export { ShoppingCart } from './ShoppingCart'

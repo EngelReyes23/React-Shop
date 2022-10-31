@@ -57,7 +57,7 @@ export const ProductsProvider = ({ children }) => {
   }
 
   // cantidad de productos en el carrito
-  const cartQuantity = state.cart.reduce((acc, product) => acc + product.quantity, 0)
+  const cartQuantity = state.cart.reduce((acc, product) => acc + product?.quantity, 0)
 
   // obtiene el subTotal de los productos en el carrito
   const subTotal = state.cart.reduce((acc, product) => acc + product.quantity * product.price, 0)

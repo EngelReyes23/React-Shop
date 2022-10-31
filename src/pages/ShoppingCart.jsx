@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import Swal from 'sweetalert2'
+import { Link } from 'wouter'
 
 // Local imports
 import { Product } from '../components/shopping-cart/Product'
@@ -110,9 +111,14 @@ export const ShoppingCart = () => {
             </div>
           </div>
 
-          <button className='inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base'>
-            Check out
-          </button>
+          {cartQuantity > 0 && (
+            <Link
+              to='/checkout'
+              className='inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base'
+            >
+              Check out
+            </Link>
+          )}
         </div>
         {/* <!-- totals - end --> */}
       </div>

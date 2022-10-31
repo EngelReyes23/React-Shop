@@ -1,8 +1,7 @@
-import { lazy, Suspense } from 'react'
 import { Redirect, Route, Switch } from 'wouter'
 
 // Local imports
-import { Home } from '../pages'
+import { About, Checkout, Contact, Home, Products, ShoppingCart } from '../pages'
 
 const ROUTES = [
   {
@@ -13,38 +12,41 @@ const ROUTES = [
   {
     exact: true,
     path: '/about',
-    component: lazy(() => import('../pages/About'))
+    component: About
   },
   {
     exact: true,
     path: '/contact',
-    component: lazy(() => import('../pages/Contact'))
+    component: Contact
   },
   {
     exact: true,
     path: '/products',
-    component: lazy(() => import('../pages/Products'))
+    component: Products
   },
   {
     exact: true,
     path: '/shopping-cart',
-    component: lazy(() => import('../pages/ShoppingCart'))
+    component: ShoppingCart
+  },
+  {
+    exact: true,
+    path: '/checkout',
+    component: Checkout
   }
 ]
 
 const Routes = () => {
   return (
-    <Suspense>
-      <Switch>
-        {ROUTES.map((route, index) => (
-          <Route key={index} {...route} />
-        ))}
+    <Switch>
+      {ROUTES.map((route, index) => (
+        <Route key={index} {...route} />
+      ))}
 
-        <Route>
-          <Redirect to='/home' />
-        </Route>
-      </Switch>
-    </Suspense>
+      <Route>
+        <Redirect to='/home' />
+      </Route>
+    </Switch>
   )
 }
 
