@@ -1,9 +1,12 @@
+import { useContext } from 'react'
+
+// Local imports
 import { ProductList } from '../components/ProductList'
-import { ProductListSkeleton } from '../components/ProductListSkeleton'
-import { useProducts } from '../hooks/useProducts'
+import { ProductListSkeleton } from '../components/skeletons/ProductListSkeleton'
+import { productsContext } from '../context'
 
 export const Products = () => {
-  const { isLoading, products } = useProducts()
+  const { isLoading, products } = useContext(productsContext)
 
   return (
     <div className='bg-white py-6 sm:py-8 lg:py-12'>

@@ -6,14 +6,14 @@ import { Home } from '../pages'
 
 const ROUTES = [
   {
+    exact: true,
     path: '/home',
-    component: Home,
-    exact: true
+    component: Home
   },
   {
+    exact: true,
     path: '/about',
-    component: lazy(() => import('../pages/About')),
-    exact: true
+    component: lazy(() => import('../pages/About'))
   },
   {
     exact: true,
@@ -24,6 +24,11 @@ const ROUTES = [
     exact: true,
     path: '/products',
     component: lazy(() => import('../pages/Products'))
+  },
+  {
+    exact: true,
+    path: '/shopping-cart',
+    component: lazy(() => import('../pages/ShoppingCart'))
   }
 ]
 

@@ -1,5 +1,8 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Link } from 'wouter'
+import { productsContext } from '../context'
+
 import { ActiveLink } from './ActiveLink'
 
 const LINKs = [
@@ -23,6 +26,9 @@ const LINKs = [
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const { cartQuantity } = useContext(productsContext)
+
   const toggle = () => {
     setIsOpen(!isOpen)
   }
@@ -91,9 +97,9 @@ export const NavBar = () => {
           </div>
 
           <div className='flex justify-center md:block'>
-            <a
+            <Link
               className='relative transform text-gray-700 transition-colors duration-300 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-300'
-              href='/shopping-cart'
+              to='/shopping-cart'
             >
               <svg
                 className='h-5 w-5'
@@ -110,8 +116,12 @@ export const NavBar = () => {
                 />
               </svg>
 
-              <span className='absolute top-0 left-0 rounded-full bg-blue-500 p-1 text-xs text-white' />
-            </a>
+              {cartQuantity > 0 && (
+                <span className='absolute -top-2 -left-1 rounded-full bg-blue-500 px-1 text-xs text-white'>
+                  {cartQuantity}
+                </span>
+              )}
+            </Link>
           </div>
         </div>
       </div>
