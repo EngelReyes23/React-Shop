@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react'
+import { useLocation } from 'wouter'
 
 // Local imports
 import { useProducts } from '../hooks/useProducts'
@@ -11,9 +12,21 @@ const initialState = {
   cart: []
 }
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0
+  })
+}
+
 export const ProductsProvider = ({ children }) => {
   const { products, isLoading, error } = useProducts()
+  const setLocation = useLocation()[1]
+
   const [state, dispatch] = useReducer(productsReducer, initialState)
+
+  const handleGoToProduct = (id) => {
+    setLocation(`/products/${id}`)
+  }
 
   const addToCart = (product) => {
     dispatch({
@@ -22,7 +35,6 @@ export const ProductsProvider = ({ children }) => {
     })
   }
 
-  // verifica si el producto ya esta en el carrito y lo suma a la cantidad
   const increaseQuantity = (product) => {
     dispatch({
       type: TYPES.INCREASE_QUANTITY,
@@ -41,12 +53,6 @@ export const ProductsProvider = ({ children }) => {
     dispatch({
       type: TYPES.REMOVE_FROM_CART,
       payload: product
-    })
-  }
-
-  const calculateTotal = () => {
-    dispatch({
-      type: TYPES.CALCULATE_TOTAL
     })
   }
 
@@ -82,10 +88,11 @@ export const ProductsProvider = ({ children }) => {
         // actions
         clearCart,
         addToCart,
-        calculateTotal,
+        scrollToTop,
         removeFromCart,
         decreaseQuantity,
-        increaseQuantity
+        increaseQuantity,
+        handleGoToProduct
       }}
     >
       {children}

@@ -1,6 +1,12 @@
 import Swal from 'sweetalert2'
 
-export const Product = ({ product, removeFromCart, decreaseQuantity, increaseQuantity }) => {
+export const Product = ({
+  product,
+  removeFromCart,
+  decreaseQuantity,
+  increaseQuantity,
+  handleGoToProduct
+}) => {
   const { title, price, images, quantity, category } = product
 
   const showAlert = () => {
@@ -28,23 +34,26 @@ export const Product = ({ product, removeFromCart, decreaseQuantity, increaseQua
 
   return (
     <div className='flex flex-wrap gap-x-4 overflow-hidden rounded-lg border sm:gap-y-4 lg:gap-6'>
-      <a href='#' className='group relative block w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40'>
+      <button
+        onClick={() => handleGoToProduct(product.id)}
+        className='group relative block w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40'
+      >
         <img
           src={images.at(0)}
           loading='lazy'
           alt={title}
           className='h-full w-full object-cover object-center transition duration-200 group-hover:scale-110'
         />
-      </a>
+      </button>
 
       <div className='flex flex-1 flex-col justify-evenly py-4'>
         <div>
-          <a
-            href='#'
+          <button
+            onClick={() => handleGoToProduct(product.id)}
             className='inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl'
           >
             {title}
-          </a>
+          </button>
         </div>
 
         <div className='font-bold'>

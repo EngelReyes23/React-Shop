@@ -16,7 +16,8 @@ export const ShoppingCart = () => {
     cartQuantity,
     removeFromCart,
     decreaseQuantity,
-    increaseQuantity
+    increaseQuantity,
+    handleGoToProduct
   } = useContext(productsContext)
 
   const handleClearCart = () => {
@@ -71,6 +72,7 @@ export const ShoppingCart = () => {
                   removeFromCart={removeFromCart}
                   increaseQuantity={increaseQuantity}
                   decreaseQuantity={decreaseQuantity}
+                  handleGoToProduct={handleGoToProduct}
                 />
               ))
             ) : (

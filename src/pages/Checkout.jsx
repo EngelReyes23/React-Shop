@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useLocation } from 'wouter'
 
 // Local imports
@@ -6,7 +6,11 @@ import { productsContext } from '../context'
 
 export const Checkout = () => {
   const setLocation = useLocation()[1]
-  const { total, cart, cartQuantity } = useContext(productsContext)
+  const { total, cart, cartQuantity, scrollToTop } = useContext(productsContext)
+
+  useEffect(() => {
+    scrollToTop()
+  }, [])
 
   if (cartQuantity === 0) setLocation('/home', { replace: true })
 

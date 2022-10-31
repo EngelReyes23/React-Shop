@@ -3,9 +3,11 @@
 // }
 
 import { useContext } from 'react'
+import { useLocation } from 'wouter'
 import { productsContext } from '../context'
 
 export const ProductCard = ({ ...product }) => {
+  const setLocation = useLocation()[1]
   const { price, title, images } = product
   const { addToCart } = useContext(productsContext)
 
@@ -13,10 +15,15 @@ export const ProductCard = ({ ...product }) => {
     addToCart({ ...product, quantity: 1 })
   }
 
+  const handleGoToProduct = () => {
+    setLocation(`/products/${product.id}`)
+  }
+
   return (
     <div className='group flex w-full max-w-xs flex-col items-center justify-center'>
       <div className='h-64 w-full cursor-pointer overflow-hidden rounded-lg bg-gray-300 bg-cover bg-center shadow-md'>
         <img
+          onClick={handleGoToProduct}
           className='h-full w-full rounded-lg bg-gray-300 bg-cover bg-center transition duration-200 ease-in-out group-hover:scale-110'
           src={images[0]}
           alt={title}

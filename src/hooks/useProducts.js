@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react'
+import api from '../utils'
 
-const API_URL = 'https://api.escuelajs.co/api/v1/products?offset=20&limit=20'
+const getProducts = async (id) => await api.products(id)
 
-const getProducts = async () => {
-  const response = await fetch(API_URL)
-  if (response.ok) return await response.json()
-
-  throw new Error('Error al obtener los productos')
-}
-
-export const useProducts = () => {
+export const useProducts = (id = '') => {
   const [data, setData] = useState({
     error: null,
     products: [],
@@ -17,7 +11,7 @@ export const useProducts = () => {
   })
 
   useEffect(() => {
-    getProducts()
+    getProducts(id)
       .then((data) => {
         setData({
           error: null,
@@ -32,7 +26,7 @@ export const useProducts = () => {
           isLoading: false
         })
       })
-  }, [])
+  }, [id])
 
   return data
 }

@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch } from 'wouter'
 
 // Local imports
-import { About, Checkout, Contact, Home, Products, ShoppingCart } from '../pages'
+import { About, Checkout, Contact, Home, ProductDetails, Products, ShoppingCart } from '../pages'
 
 const ROUTES = [
   {
@@ -33,6 +33,11 @@ const ROUTES = [
     exact: true,
     path: '/checkout',
     component: Checkout
+  },
+  {
+    exact: true,
+    path: '/products/:id',
+    component: ProductDetails
   }
 ]
 
