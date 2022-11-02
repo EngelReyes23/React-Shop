@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import { useContext, useState } from 'react'
 import { Link } from 'wouter'
-import { productsContext } from '../context'
 
+// Local imports
+import { productsContext } from '../context'
 import { ActiveLink } from './ActiveLink'
 
 const LINKs = [
@@ -26,7 +27,6 @@ const LINKs = [
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
-
   const { cartQuantity } = useContext(productsContext)
 
   const toggle = () => {

@@ -1,17 +1,15 @@
 import { useContext, useEffect } from 'react'
 import { useRoute } from 'wouter'
+
+// Local imports
 import { ProductDetailSkeleton } from '../components/skeletons/ProductDetailSkeleton'
 import { productsContext } from '../context'
 import { useProducts } from '../hooks/useProducts'
 
 export const ProductDetails = () => {
   const { id } = useRoute('/products/:id')[1]
-  const { isLoading, products } = useProducts(id)
-  const { addToCart, scrollToTop } = useContext(productsContext)
-
-  const handleAddToCart = () => {
-    addToCart({ ...products, quantity: 1 })
-  }
+  const { isLoading, products: product } = useProducts(id)
+  const { scrollToTop, handleAddToCart } = useContext(productsContext)
 
   useEffect(() => {
     scrollToTop()
@@ -19,7 +17,7 @@ export const ProductDetails = () => {
 
   if (isLoading) return <ProductDetailSkeleton />
 
-  const { title, description, price, images, category } = products
+  const { title, description, price, images, category } = product
 
   return (
     <div className='bg-white py-6 sm:py-8 lg:py-12'>
@@ -78,7 +76,7 @@ export const ProductDetails = () => {
             {/* <!-- buttons - start --> */}
             <div className='flex gap-2.5'>
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(product)}
                 className='inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base'
               >
                 Add to cart

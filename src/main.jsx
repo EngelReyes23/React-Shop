@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'sweetalert2/src/sweetalert2.scss'
+
+// Local imports
 import App from './App'
 import { ProductsProvider } from './context'
 import './index.css'

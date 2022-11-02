@@ -7,7 +7,7 @@ export const Product = ({
   increaseQuantity,
   handleGoToProduct
 }) => {
-  const { title, price, images, quantity, category } = product
+  const { id, title, price, images, quantity, category } = product
 
   const showAlert = () => {
     Swal.fire({
@@ -35,7 +35,7 @@ export const Product = ({
   return (
     <div className='flex flex-wrap gap-x-4 overflow-hidden rounded-lg border sm:gap-y-4 lg:gap-6'>
       <button
-        onClick={() => handleGoToProduct(product.id)}
+        onClick={() => handleGoToProduct(id)}
         className='group relative block w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40'
       >
         <img
@@ -49,7 +49,7 @@ export const Product = ({
       <div className='flex flex-1 flex-col justify-evenly py-4'>
         <div>
           <button
-            onClick={() => handleGoToProduct(product.id)}
+            onClick={() => handleGoToProduct(id)}
             className='inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl'
           >
             {title}

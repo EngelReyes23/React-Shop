@@ -1,16 +1,10 @@
-import { createContext, useReducer } from 'react'
+import { createContext } from 'react'
 import { useLocation } from 'wouter'
 
 // Local imports
-import { useProducts } from '../hooks/useProducts'
-import { productsReducer } from '../reducer'
-import { TYPES } from '../types'
+import { useActions, useProducts } from '../hooks/'
 
 export const productsContext = createContext()
-
-const initialState = {
-  cart: []
-}
 
 const scrollToTop = () => {
   window.scrollTo({
@@ -19,49 +13,22 @@ const scrollToTop = () => {
 }
 
 export const ProductsProvider = ({ children }) => {
-  const { products, isLoading, error } = useProducts()
   const setLocation = useLocation()[1]
+  const { products, isLoading, error } = useProducts()
+  const { state, addToCart, clearCart, decreaseQuantity, increaseQuantity, removeFromCart } =
+    useActions()
 
-  const [state, dispatch] = useReducer(productsReducer, initialState)
-
+  // #region handles
   const handleGoToProduct = (id) => {
     setLocation(`/products/${id}`)
   }
 
-  const addToCart = (product) => {
-    dispatch({
-      type: TYPES.ADD_TO_CART,
-      payload: product
-    })
+  const handleAddToCart = (product) => {
+    addToCart({ ...product, quantity: 1 })
   }
+  // #endregion handles
 
-  const increaseQuantity = (product) => {
-    dispatch({
-      type: TYPES.INCREASE_QUANTITY,
-      payload: product
-    })
-  }
-
-  const decreaseQuantity = (product) => {
-    dispatch({
-      type: TYPES.DECREASE_QUANTITY,
-      payload: product
-    })
-  }
-
-  const removeFromCart = (product) => {
-    dispatch({
-      type: TYPES.REMOVE_FROM_CART,
-      payload: product
-    })
-  }
-
-  const clearCart = () => {
-    dispatch({
-      type: TYPES.CLEAR_CART
-    })
-  }
-
+  // #region values to be provided
   // cantidad de productos en el carrito
   const cartQuantity = state.cart.reduce((acc, product) => acc + product?.quantity, 0)
 
@@ -71,6 +38,7 @@ export const ProductsProvider = ({ children }) => {
   const iva = subTotal * 0.15
 
   const total = subTotal + iva
+  // #endregion values to be provided
 
   return (
     <productsContext.Provider
@@ -87,11 +55,13 @@ export const ProductsProvider = ({ children }) => {
 
         // actions
         clearCart,
-        addToCart,
         scrollToTop,
         removeFromCart,
         decreaseQuantity,
         increaseQuantity,
+
+        // handles
+        handleAddToCart,
         handleGoToProduct
       }}
     >
