@@ -1,4 +1,61 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2'
+import * as z from 'zod'
+
+const schema = z.object({
+  name: z.string().min(2).max(20),
+  email: z.string().email(),
+  phone: z.string().min(10).max(20).regex(/^\d+$/),
+  message: z.string().min(10).max(1000)
+})
+
+const Field = ({ type, placeholder, name, register, errors }) => {
+  if (type === 'textarea') {
+    return (
+      <>
+        <textarea
+          rows='6'
+          {...register(name)}
+          placeholder={placeholder}
+          className='text-body-color w-full resize-none rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+        />
+
+        {errors[name] && <p className='mt-1 text-sm text-red-500'>{errors[name].message}</p>}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <input
+        id={name}
+        {...register(name)}
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        className='text-body-color w-full rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+      />
+
+      {errors[name] && <p className='text-left text-sm text-red-500'>{errors[name].message}</p>}
+    </>
+  )
+}
+
 export const Contact = () => {
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ resolver: zodResolver(schema) })
+
+  const onSubmit = async (data) => {
+    console.log(data)
+    await Swal.fire('Success', 'Message sent', 'success')
+    reset()
+  }
+
   return (
     <section className='relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]'>
       <div className='container mx-auto'>
@@ -55,33 +112,41 @@ export const Contact = () => {
           </div>
           <div className='w-full px-4 lg:w-1/2 xl:w-5/12'>
             <div className='relative rounded-lg border bg-white p-8 shadow-lg sm:p-12'>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-6'>
-                  <input
+                  <Field
                     type='text'
                     placeholder='Your Name'
-                    className='text-body-color w-full rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+                    name='name'
+                    register={register}
+                    errors={errors}
                   />
                 </div>
                 <div className='mb-6'>
-                  <input
+                  <Field
                     type='email'
                     placeholder='Your Email'
-                    className='text-body-color w-full rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+                    name='email'
+                    register={register}
+                    errors={errors}
                   />
                 </div>
                 <div className='mb-6'>
-                  <input
-                    type='text'
-                    placeholder='Your Phone'
-                    className='text-body-color w-full rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+                  <Field
+                    type='tel'
+                    placeholder='Your Phone Number'
+                    name='phone'
+                    register={register}
+                    errors={errors}
                   />
                 </div>
                 <div className='mb-6'>
-                  <textarea
-                    rows='6'
+                  <Field
+                    type='textarea'
                     placeholder='Your Message'
-                    className='text-body-color w-full resize-none rounded border border-[f0f0f0] py-3 px-[14px] text-base outline-none focus:border-blue-200 focus-visible:shadow-none'
+                    name='message'
+                    register={register}
+                    errors={errors}
                   />
                 </div>
                 <div>
